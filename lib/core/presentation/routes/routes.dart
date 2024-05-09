@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rankai/core/routes/route_names.dart';
+import 'package:rankai/core/presentation/routes/route_names.dart';
 import 'package:rankai/features/home/presentation/home_screen.dart';
 import 'package:rankai/features/splash/presentation/splash_screen.dart';
 

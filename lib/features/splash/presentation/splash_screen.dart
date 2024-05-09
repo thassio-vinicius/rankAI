@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:rankai/core/injector.dart';
-import 'package:rankai/core/routes/my_navigator.dart';
-import 'package:rankai/core/routes/route_names.dart';
-import 'package:rankai/core/widgets/my_text.dart';
-import 'package:rankai/core/widgets/primary_button.dart';
+import 'package:rankai/core/presentation/routes/my_navigator.dart';
+import 'package:rankai/core/presentation/routes/route_names.dart';
+import 'package:rankai/core/presentation/widgets/my_text.dart';
+import 'package:rankai/core/presentation/widgets/primary_button.dart';
 import 'package:rankai/features/splash/presentation/components/animated_background.dart';
 import 'package:rankai/features/splash/presentation/components/animated_rank.dart';
 import 'package:rankai/l10n/global_app_localizations.dart';

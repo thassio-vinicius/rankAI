@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rankai/core/presentation/widgets/my_text.dart';
 import 'package:rankai/core/utils/colors.dart';
-import 'package:rankai/core/widgets/my_text.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({

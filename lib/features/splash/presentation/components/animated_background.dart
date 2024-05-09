@@ -122,7 +122,7 @@ class _WidgetState extends State<AnimatedBackground> {
 }
 
 class _AnimatedBackgroundItem extends StatefulWidget {
-  const _AnimatedBackgroundItem({super.key});
+  const _AnimatedBackgroundItem();
 
   @override
   State<_AnimatedBackgroundItem> createState() =>
