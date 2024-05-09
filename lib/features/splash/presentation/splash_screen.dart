@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
   double _backgroundOpacity = 0;
 
   late AnimationController _controller;
-  late Animation<Offset> _offset;
+  late Animation<double> _opacity;
 
   @override
   void initState() {
@@ -37,11 +37,9 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 900),
     );
 
-    _offset = Tween(begin: const Offset(0, 1), end: const Offset(0, 0)).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeIn,
-      ),
+    _opacity = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
     );
 
     _controller.addListener(() {
@@ -79,8 +77,8 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
             Positioned.fill(
-              child: SlideTransition(
-                position: _offset,
+              child: FadeTransition(
+                opacity: _opacity,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
