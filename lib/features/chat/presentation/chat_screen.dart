@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rankai/core/injector.dart';
+import 'package:rankai/core/presentation/widgets/app_logo.dart';
 import 'package:rankai/core/presentation/widgets/my_text.dart';
 import 'package:rankai/core/utils/colors.dart';
 import 'package:rankai/features/chat/presentation/components/chat_bubble.dart';
@@ -19,7 +21,40 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final TextEditingController _promptController = TextEditingController();
+  final _promptController = TextEditingController();
+  final _scrollController = ScrollController(keepScrollOffset: true);
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent * 2,
+        duration: kThemeAnimationDuration,
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 20),
+          curve: Curves.ease,
+        );
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _promptController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,11 +70,44 @@ class _ChatScreenState extends State<ChatScreen> {
             bottom: false,
             child: Column(
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16.0),
+                      child: AppLogo(large: false),
+                    ),
+                    Builder(builder: (context) {
+                      return IconButton(
+                        onPressed: () {
+                          context.read<ChatCubit>().deleteHistory();
+                        },
+                        icon: Transform.rotate(
+                          angle: 1.1,
+                          child: const Icon(
+                            Icons.restart_alt,
+                            color: Colors.white,
+                            size: 26,
+                          ),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+                Container(
+                  color: Colors.grey,
+                  width: MediaQuery.sizeOf(context).width,
+                  height: 1,
+                ),
                 Expanded(
                   child: Container(
                     color: Colors.black,
                     child: BlocConsumer<ChatCubit, ChatState>(
-                      listener: (context, state) {},
+                      listener: (context, state) {
+                        if (state is MessageLoadedState) {
+                          _scrollToBottom();
+                        }
+                      },
                       builder: (context, state) {
                         bool isEmpty = state.isEmpty;
 
@@ -68,7 +136,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         }
 
                         return ListView.builder(
+                          shrinkWrap: true,
                           padding: const EdgeInsets.all(16),
+                          controller: _scrollController,
+                          physics: const ClampingScrollPhysics(),
                           itemCount: state.chatHistoryEntity.messages.length,
                           itemBuilder: (context, index) {
                             final message =
@@ -94,25 +165,30 @@ class _ChatScreenState extends State<ChatScreen> {
                                   fromUser: message.fromUser,
                                   timestamp: message.timestamp,
                                 ),
-                                if (state is MessageLoadingState)
+                                if (state is MessageLoadingState &&
+                                    index + 1 ==
+                                        state.chatHistoryEntity.messages.length)
                                   Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 4,
-                                        horizontal: 8,
-                                      ),
-                                      child: const JumpingDotsProgressIndicator(
-                                        fontSize: 14,
-                                        color: AppColors.darkBackground,
+                                    child: IntrinsicWidth(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.darkBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 6,
+                                          horizontal: 16,
+                                        ),
+                                        child: const CustomLoadingAnimation(
+                                          size: 24,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                const SizedBox(height: 12),
                               ],
                             );
                           },
@@ -149,8 +225,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                   decoration: InputDecoration(
                                     hintText: intl.promptHint,
                                     border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16)),
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                     hintStyle: GoogleFonts.openSans(
                                         color: Colors.grey),
                                   ),
@@ -163,6 +239,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     : () {
                                         context.read<ChatCubit>().fetchRankings(
                                             _promptController.text);
+                                        _scrollToBottom();
                                         _promptController.text = '';
                                         FocusScope.of(context).unfocus();
                                       },

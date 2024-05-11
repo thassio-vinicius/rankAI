@@ -1,5 +1,6 @@
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:rankai/core/utils/base_cubit.dart';
+import 'package:rankai/features/chat/domain/entities/chat/chat_history_entity.dart';
 import 'package:rankai/features/chat/domain/entities/chat/chat_message_entity.dart';
 import 'package:rankai/features/chat/domain/repositories/ai_repository.dart';
 import 'package:rankai/features/chat/presentation/cubit/chat_state.dart';
@@ -12,8 +13,8 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
   final AIRepository _repository;
 
   Future<void> fetchRankings(String prompt) async {
-    _addMessage(prompt, true);
     emit(MessageLoadingState(chatHistoryEntity: state.chatHistoryEntity));
+    _addMessage(prompt, true);
 
     final response = await _repository.fetchRankings(prompt);
 
@@ -32,8 +33,15 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
     );
   }
 
-  void resetState() {
-    emit(const ChatInitialState());
+  void deleteHistory() {
+    emit(
+      const ChatInitialState(
+        chatHistoryEntity: ChatHistoryEntity(
+          messages: [],
+          startingTimestamp: 0,
+        ),
+      ),
+    );
   }
 
   @override
@@ -73,11 +81,13 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
 
     messages.add(message);
 
-    state.copyWith(
-      chatHistoryEntity: state.chatHistoryEntity.copyWith(
-        messages: messages,
-        startingTimestamp:
-            isFirstMessage ? DateTime.now().millisecondsSinceEpoch : null,
+    emit(
+      state.copyWith(
+        chatHistoryEntity: state.chatHistoryEntity.copyWith(
+          messages: messages,
+          startingTimestamp:
+              isFirstMessage ? DateTime.now().millisecondsSinceEpoch : null,
+        ),
       ),
     );
   }

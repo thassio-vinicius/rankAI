@@ -1,118 +1,107 @@
 import 'package:flutter/material.dart';
 
-class JumpingDotsProgressIndicator extends StatefulWidget {
-  final int numberOfDots;
-  final double fontSize;
-  final double dotSpacing;
+class CustomLoadingAnimation extends StatefulWidget {
+  final double size;
   final Color color;
-  final int milliseconds;
 
-  const JumpingDotsProgressIndicator({
+  const CustomLoadingAnimation({
     super.key,
-    this.numberOfDots = 3,
-    this.fontSize = 10.0,
-    this.color = Colors.black,
-    this.dotSpacing = 0.0,
-    this.milliseconds = 250,
+    required this.size,
+    required this.color,
   });
 
   @override
-  State<JumpingDotsProgressIndicator> createState() =>
-      _JumpingDotsProgressIndicatorState();
+  State<CustomLoadingAnimation> createState() => _CustomLoadingAnimationState();
 }
 
-class _JumpingDotsProgressIndicatorState
-    extends State<JumpingDotsProgressIndicator> with TickerProviderStateMixin {
-  List<AnimationController> controllers = [];
-  List<Animation<double>> animations = [];
-  List<Widget> dots = [];
+class _CustomLoadingAnimationState extends State<CustomLoadingAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _initializeAnimations();
-    _startAnimations();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    )..repeat();
   }
 
-  void _initializeAnimations() {
-    for (int i = 0; i < widget.numberOfDots; i++) {
-      final controller = AnimationController(
-        duration: Duration(milliseconds: widget.milliseconds),
-        vsync: this,
-      );
-      final animation = Tween(begin: 0.0, end: 8.0).animate(controller);
-      animations.add(animation);
-      controllers.add(controller);
-    }
-  }
-
-  void _startAnimations() {
-    for (int i = 0; i < widget.numberOfDots; i++) {
-      controllers[i].addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          controllers[i].reverse();
-          if (i < widget.numberOfDots - 1) {
-            controllers[i + 1].forward();
-          } else {
-            controllers[0].forward();
-          }
-        } else if (status == AnimationStatus.dismissed) {
-          controllers[i].forward();
-        }
-      });
-      dots.add(
-        Padding(
-          padding: EdgeInsets.only(right: widget.dotSpacing),
-          child: _JumpingDot(
-            animation: animations[i],
-            fontSize: widget.fontSize,
+  Widget _buildDot(
+          {required Offset begin,
+          required Offset end,
+          required Interval interval}) =>
+      Transform.translate(
+        offset: Tween<Offset>(begin: begin, end: end)
+            .animate(
+              CurvedAnimation(
+                parent: _controller,
+                curve: interval,
+              ),
+            )
+            .value,
+        child: Container(
+          width: widget.size / 5,
+          height: widget.size / 5,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: widget.color,
           ),
         ),
       );
-    }
-    controllers[0].forward();
+
+  Widget _buildBottomDot({required double begin, required double end}) {
+    final double offset = -widget.size / 5;
+    return _buildDot(
+      begin: Offset.zero,
+      end: Offset(0.0, offset),
+      interval: Interval(begin, end),
+    );
+  }
+
+  Widget _buildTopDot({required double begin, required double end}) {
+    final double offset = -widget.size / 5;
+    return _buildDot(
+      begin: Offset(0.0, offset),
+      end: Offset.zero,
+      interval: Interval(begin, end),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 30.0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: dots,
+    final double size = widget.size;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, __) => SizedBox(
+        width: size,
+        height: size,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                _controller.value <= 0.50
+                    ? _buildBottomDot(begin: 0.12, end: 0.50)
+                    : _buildTopDot(begin: 0.62, end: 1.0),
+                _controller.value <= 0.44
+                    ? _buildBottomDot(begin: 0.06, end: 0.44)
+                    : _buildTopDot(begin: 0.56, end: 0.94),
+                _controller.value <= 0.38
+                    ? _buildBottomDot(begin: 0.0, end: 0.38)
+                    : _buildTopDot(begin: 0.50, end: 0.88),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   @override
   void dispose() {
-    for (var controller in controllers) {
-      controller.dispose();
-    }
+    _controller.dispose();
     super.dispose();
-  }
-}
-
-class _JumpingDot extends AnimatedWidget {
-  final Color color;
-  final double fontSize;
-
-  const _JumpingDot({
-    required Animation<double> animation,
-    required this.color,
-    required this.fontSize,
-  }) : super(listenable: animation);
-
-  @override
-  Widget build(BuildContext context) {
-    final Animation<double> animation = listenable as Animation<double>;
-    return SizedBox(
-      height: animation.value,
-      child: Text(
-        '.',
-        style: TextStyle(color: color, fontSize: fontSize),
-      ),
-    );
   }
 }

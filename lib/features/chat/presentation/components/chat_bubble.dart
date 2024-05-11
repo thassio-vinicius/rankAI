@@ -29,9 +29,11 @@ class ChatBubble extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: AppColors.primaryBubble,
-            borderRadius: BorderRadius.circular(100),
+            borderRadius: BorderRadius.circular(12),
           ),
-          padding: const EdgeInsets.all(16),
+          constraints:
+              BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width * 0.75),
+          padding: const EdgeInsets.all(12),
           child: MyText(
             content,
             style: MyTextStyle(
@@ -40,7 +42,7 @@ class ChatBubble extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 4),
         MyText(
           _formattedDate(),
           style: MyTextStyle(

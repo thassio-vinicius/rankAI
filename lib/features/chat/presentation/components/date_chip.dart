@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rankai/core/injector.dart';
 import 'package:rankai/core/presentation/widgets/my_text.dart';
+import 'package:rankai/core/utils/colors.dart';
 import 'package:rankai/l10n/global_app_localizations.dart';
 
 class DateChip extends StatelessWidget {
@@ -32,14 +33,14 @@ class DateChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.cyanAccent,
+        color: AppColors.chipBackground,
         borderRadius: BorderRadius.circular(100),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      child: MyText.small(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: MyText(
         _formattedDate(),
         style: MyTextStyle(
-          color: Colors.black,
+          color: AppColors.greyFont,
           fontWeight: FontWeight.w600,
         ),
       ),

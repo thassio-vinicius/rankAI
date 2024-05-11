@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:rankai/core/injector.dart';
 import 'package:rankai/core/presentation/routes/my_navigator.dart';
 import 'package:rankai/core/presentation/routes/route_names.dart';
-import 'package:rankai/core/presentation/widgets/my_text.dart';
+import 'package:rankai/core/presentation/widgets/app_logo.dart';
 import 'package:rankai/core/presentation/widgets/primary_button.dart';
 import 'package:rankai/features/splash/presentation/components/animated_background.dart';
 import 'package:rankai/features/splash/presentation/components/animated_rank.dart';
@@ -70,9 +70,7 @@ class _SplashScreenState extends State<SplashScreen>
               child: AnimatedOpacity(
                 opacity: _backgroundOpacity,
                 duration: const Duration(milliseconds: 500),
-                child: Hero(
-                    tag: 'AnimatedBackground',
-                    child: const AnimatedBackground()),
+                child: const AnimatedBackground(),
                 onEnd: () {
                   _controller.forward();
                 },
@@ -85,10 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Spacer(),
-                    MyText.xxLarge(
-                      intl.appName,
-                      style: MyTextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    const AppLogo(large: true),
                     const SizedBox(height: 12),
                     if (_controller.isCompleted) const AnimatedRank(),
                     const SizedBox(height: 12),

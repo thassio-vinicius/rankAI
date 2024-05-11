@@ -1,5 +1,4 @@
 {
-  "appName": "RankAI",
   "getStarted": "Get started",
   "promptHint": "\"10 best restaurants in the world?\"",
   "emptyChatMessage": "Ask for a ranking below to get started!",
@@ -29,5 +28,6 @@
         "type": "int"
       }
     }
-  }
+  },
+  "deleteChatHistory": "Delete chat history"
 }

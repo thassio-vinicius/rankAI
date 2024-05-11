@@ -17,6 +17,31 @@ class AIRepository {
             "You are a helpful assistant, but you only answer questions about rankings",
       );
 
+      /*
+      return const Right(
+        CompletionsEntity(
+          id: '',
+          object: '',
+          created: 1,
+          model: '',
+          choices: [
+            ChoiceEntity(
+                index: 0,
+                message: MessageEntity(
+                  role: MessageRole.assistant,
+                  content: 'test',
+                ),
+                finishReason: '')
+          ],
+          usage: UsageEntity(
+            promptTokens: 1,
+            completionTokens: 1,
+            totalTokens: 1,
+          ),
+        ),
+      );
+       */
+
       final response = await _source.fetchRankings([
         systemMessage,
         userMessage,
