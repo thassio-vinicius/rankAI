@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rankai/features/chat/data/models/completions/message_model.dart';
-import 'package:rankai/features/chat/utils/message_role.dart';
+import 'package:rankai/features/chat/enums/message_role.dart';
 
 class MessageEntity extends Equatable {
   final MessageRole role;

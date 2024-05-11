@@ -1,17 +1,21 @@
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:rankai/features/chat/data/data_source/remote/ai_data_source.dart';
+import 'package:rankai/features/chat/data/data_source/ai_data_source.dart';
 import 'package:rankai/features/chat/data/models/completions/message_model.dart';
 import 'package:rankai/features/chat/domain/entities/completions/completion_entity.dart';
 import 'package:rankai/features/chat/domain/entities/images/generated_image_entity.dart';
-import 'package:rankai/features/chat/utils/message_role.dart';
+import 'package:rankai/features/chat/enums/message_role.dart';
 import 'package:rankai/l10n/global_app_localizations.dart';
 
-class ChatResponse {
+class ChatResponse extends Equatable {
   final GeneratedImageEntity? generatedImage;
   final CompletionsEntity completions;
 
   const ChatResponse({required this.completions, this.generatedImage});
+
+  @override
+  List<Object?> get props => [generatedImage, completions];
 }
 
 class AIRepository {
@@ -43,8 +47,8 @@ class AIRepository {
       final messageContent = response.choices.first.message.content;
       GeneratedImageEntity? generatedImage;
 
-      if (shouldGenerateImage(messageContent)) {
-        final imageResponse = await generateImage(messageContent);
+      if (_shouldGenerateImage(messageContent)) {
+        final imageResponse = await _generateImage(messageContent);
 
         imageResponse.fold((l) {
           debugPrint(l.toString());
@@ -64,8 +68,7 @@ class AIRepository {
     }
   }
 
-  @visibleForTesting
-  Future<Either<Exception, GeneratedImageEntity>> generateImage(
+  Future<Either<Exception, GeneratedImageEntity>> _generateImage(
     String prompt,
   ) async {
     try {
@@ -77,8 +80,7 @@ class AIRepository {
     }
   }
 
-  @visibleForTesting
-  bool shouldGenerateImage(String response) {
+  bool _shouldGenerateImage(String response) {
     return !response
         .toLowerCase()
         .contains(_localizations.current.sorry.toLowerCase());

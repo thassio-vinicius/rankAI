@@ -3,7 +3,7 @@ import 'package:rankai/core/http/client.dart';
 import 'package:rankai/features/chat/data/models/completions/completion_model.dart';
 import 'package:rankai/features/chat/data/models/completions/message_model.dart';
 import 'package:rankai/features/chat/data/models/images/generated_image_model.dart';
-import 'package:rankai/features/chat/utils/gpt_model.dart';
+import 'package:rankai/features/chat/enums/gpt_model.dart';
 
 abstract class AIDataSource {
   Future<CompletionsModel> fetchRankings(List<MessageModel> messages);

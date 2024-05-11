@@ -1,4 +1,5 @@
 {
+  "appName": "RankAI",
   "getStarted": "Get started",
   "promptHint": "\"10 best travel sites in Barcelona?\"",
   "emptyChatMessage": "Ask for a ranking below to get started!",
