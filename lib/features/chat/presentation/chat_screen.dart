@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:rankai/core/injector.dart';
 import 'package:rankai/core/presentation/widgets/app_logo.dart';
 import 'package:rankai/core/presentation/widgets/my_text.dart';
@@ -9,6 +8,7 @@ import 'package:rankai/core/utils/colors.dart';
 import 'package:rankai/features/chat/presentation/components/chat_bubble.dart';
 import 'package:rankai/features/chat/presentation/components/date_chip.dart';
 import 'package:rankai/features/chat/presentation/components/loading_animation.dart';
+import 'package:rankai/features/chat/presentation/components/message_input_field.dart';
 import 'package:rankai/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:rankai/features/chat/presentation/cubit/chat_state.dart';
 import 'package:rankai/l10n/global_app_localizations.dart';
@@ -113,11 +113,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         if (isEmpty) {
                           return Center(
-                            child: MyText.mediumSmall(
-                              intl.emptyChatMessage,
-                              style: MyTextStyle(
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w600,
+                            child: SizedBox(
+                              width: MediaQuery.sizeOf(context).width * 0.65,
+                              child: MyText.mediumSmall(
+                                intl.emptyChatMessage,
+                                style: MyTextStyle(
+                                  textAlign: TextAlign.center,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           );
@@ -125,11 +128,14 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         if (state is MessageFailedState) {
                           return Center(
-                            child: MyText.mediumSmall(
-                              intl.genericErrorMessage,
-                              style: MyTextStyle(
-                                textAlign: TextAlign.center,
-                                fontWeight: FontWeight.w600,
+                            child: SizedBox(
+                              width: MediaQuery.sizeOf(context).width * 0.65,
+                              child: MyText.mediumSmall(
+                                intl.genericErrorMessage,
+                                style: MyTextStyle(
+                                  textAlign: TextAlign.center,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           );
@@ -160,11 +166,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                       ),
                                     ),
                                   ),
-                                ChatBubble(
-                                  content: message.content,
-                                  fromUser: message.fromUser,
-                                  timestamp: message.timestamp,
-                                ),
+                                ChatBubble(message: message),
                                 if (state is MessageLoadingState &&
                                     index + 1 ==
                                         state.chatHistoryEntity.messages.length)
@@ -173,7 +175,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     child: IntrinsicWidth(
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: AppColors.darkBackground,
+                                          color: AppColors.darkBubble,
                                           borderRadius:
                                               BorderRadius.circular(100),
                                         ),
@@ -197,73 +199,33 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                Builder(builder: (context) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.darkBackground,
-                      border: Border(
-                        top: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(24),
-                    child: SafeArea(
-                      top: false,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: MediaQuery.sizeOf(context).height * 0.15,
-                        ),
-                        child: IntrinsicHeight(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: _promptController,
-                                  style:
-                                      GoogleFonts.openSans(color: Colors.white),
-                                  textInputAction: TextInputAction.newline,
-                                  maxLines: null,
-                                  decoration: InputDecoration(
-                                    hintText: intl.promptHint,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    hintStyle: GoogleFonts.openSans(
-                                        color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton(
-                                onPressed: _promptController.text.isEmpty
-                                    ? null
-                                    : () {
-                                        context.read<ChatCubit>().fetchRankings(
-                                            _promptController.text);
-                                        _scrollToBottom();
-                                        _promptController.text = '';
-                                        FocusScope.of(context).unfocus();
-                                      },
-                                icon: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.primary,
-                                  ),
-                                  padding: const EdgeInsets.all(12),
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.send,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                Builder(
+                  builder: (context) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        border: Border(
+                          top: BorderSide(color: Colors.grey),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                      padding: const EdgeInsets.all(24),
+                      child: SafeArea(
+                        top: false,
+                        child: MessageInputField(
+                          onSubmit: () {
+                            context
+                                .read<ChatCubit>()
+                                .fetchRankings(_promptController.text);
+                            _scrollToBottom();
+                            _promptController.text = '';
+                            FocusScope.of(context).unfocus();
+                          },
+                          controller: _promptController,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),

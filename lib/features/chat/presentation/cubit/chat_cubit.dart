@@ -23,12 +23,18 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
         emit(MessageFailedState(chatHistoryEntity: state.chatHistoryEntity));
       },
       (r) {
-        _addMessage(r.choices.first.message.content, false);
+        _addMessage(
+          r.completions.choices.first.message.content,
+          false,
+          image: r.generatedImage?.b64Json,
+        );
 
-        emit(MessageLoadedState(
-          completionsEntity: r,
-          chatHistoryEntity: state.chatHistoryEntity,
-        ));
+        emit(
+          MessageLoadedState(
+            completionsEntity: r.completions,
+            chatHistoryEntity: state.chatHistoryEntity,
+          ),
+        );
       },
     );
   }
@@ -53,9 +59,7 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
         return MessageLoadedState.fromJson(json);
       } else if (type == 'MessageLoadingState') {
         return MessageLoadingState.fromJson(json);
-      } // else if (type == 'MessageFailedState') {
-      //  return MessageFailedState.fromJson(json);
-      // }
+      }
 
       return const ChatInitialState();
     } catch (e) {
@@ -68,7 +72,7 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
     return state.toJson();
   }
 
-  void _addMessage(String content, bool fromUser) {
+  void _addMessage(String content, bool fromUser, {String? image}) {
     List<ChatMessageEntity> messages =
         List.from(state.chatHistoryEntity.messages);
     bool isFirstMessage = messages.isEmpty;
@@ -76,6 +80,7 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
     final message = ChatMessageEntity(
       fromUser: fromUser,
       content: content,
+      image: image,
       timestamp: DateTime.now().millisecondsSinceEpoch,
     );
 

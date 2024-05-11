@@ -16,6 +16,6 @@ Future<void> init() async {
   );
 
   sl.registerFactory<AIRepository>(
-    () => AIRepository(sl()),
+    () => AIRepository(sl(), sl()),
   );
 }

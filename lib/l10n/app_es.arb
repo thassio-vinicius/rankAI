@@ -1,0 +1,35 @@
+{
+  "getStarted": "Empezar",
+  "promptHint": "\"¿10 mejores sitios de viajes en Barcelona?\"",
+  "emptyChatMessage": "¡Pide un ranking a continuación para empezar!",
+  "genericErrorMessage": "Hubo un error con tu solicitud. Por favor, inténtalo de nuevo.",
+  "today": "Hoy",
+  "yesterday": "Ayer",
+  "daysAgo": "Hace {days} días",
+  "@daysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "monthsAgo": "Hace {months} meses",
+  "@monthsAgo": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsAgo": "Hace {years} años",
+  "@yearsAgo": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  },
+  "deleteChatHistory": "Borrar historial de chat",
+  "postPrompt": "- Si no puedes responder la pregunta, por favor incluye la palabra 'Lo siento' en tu respuesta",
+  "sorry": "Lo siento"
+}

@@ -6,7 +6,7 @@ class HTTP {
   final Dio client = createClient();
 
   static Dio createClient() {
-    const baseUrl = 'https://api.openai.com/v1/chat';
+    const baseUrl = 'https://api.openai.com/v1';
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,

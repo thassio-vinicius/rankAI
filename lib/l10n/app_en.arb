@@ -1,6 +1,6 @@
 {
   "getStarted": "Get started",
-  "promptHint": "\"10 best restaurants in the world?\"",
+  "promptHint": "\"10 best travel sites in Barcelona?\"",
   "emptyChatMessage": "Ask for a ranking below to get started!",
   "genericErrorMessage": "There was an error with your request. Please try again.",
   "today": "Today",
@@ -29,5 +29,7 @@
       }
     }
   },
-  "deleteChatHistory": "Delete chat history"
+  "deleteChatHistory": "Delete chat history",
+  "postPrompt": "- If you are unable to answer the question, please include the word 'Sorry' in your response",
+  "sorry": "Sorry"
 }
