@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:rankai/core/data/models/message_model.dart';
+import 'package:rankai/features/chat/data/models/completions/message_model.dart';
+import 'package:rankai/features/chat/utils/message_role.dart';
 
 class MessageEntity extends Equatable {
-  final String role;
+  final MessageRole role;
   final String content;
 
   const MessageEntity({
@@ -12,7 +13,9 @@ class MessageEntity extends Equatable {
 
   factory MessageEntity.fromModel(MessageModel model) {
     return MessageEntity(
-      role: model.role,
+      role: MessageRole.values.firstWhere(
+          (element) => element.key == model.role,
+          orElse: () => MessageRole.none),
       content: model.content,
     );
   }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:rankai/core/data/models/choice_model.dart';
-import 'package:rankai/core/domain/entities/message_entity.dart';
+import 'package:rankai/features/chat/data/models/completions/choice_model.dart';
+import 'package:rankai/features/chat/domain/entities/completions/message_entity.dart';
 
 class ChoiceEntity extends Equatable {
   final int index;

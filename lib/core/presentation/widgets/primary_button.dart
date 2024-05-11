@@ -51,7 +51,7 @@ class PrimaryButton extends StatelessWidget {
                   child: MyText(
                     text.toUpperCase(),
                     style: MyTextStyle(
-                      color: textColor ?? Colors.white,
+                      color: textColor ?? Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:rankai/core/http/app_interceptor.dart';
 
 class HTTP {
   final Dio client = createClient();
@@ -9,19 +10,17 @@ class HTTP {
     final dio = Dio(
       BaseOptions(
         baseUrl: baseUrl,
+        validateStatus: (status) => true,
         contentType: Headers.jsonContentType,
-        headers: {"Authorization": "Bearer ${dotenv.env['API_KEY']}"},
+        headers: {
+          "Authorization": "Bearer ${dotenv.env['API_KEY']}",
+          "OpenAI-Organization": "org-JOp6EFg0Ev3HRSEP5r7ls0kf",
+        },
       ),
     );
 
+    dio.interceptors.add(AppInterceptors(dio));
+
     return dio;
-  }
-
-  void setAuthorizationHeader(String idToken) {
-    client.options.headers["Authorization"] = "Bearer $idToken";
-  }
-
-  void removeAuthorizationHeader() {
-    client.options.headers.remove("Authorization");
   }
 }

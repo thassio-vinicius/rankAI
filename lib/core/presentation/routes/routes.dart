@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rankai/core/presentation/routes/route_names.dart';
-import 'package:rankai/features/home/presentation/home_screen.dart';
+import 'package:rankai/features/chat/presentation/chat_screen.dart';
 import 'package:rankai/features/splash/presentation/splash_screen.dart';
 
 class NavigationService {
@@ -24,11 +24,11 @@ final router = GoRouter(
       },
     ),
     GoRoute(
-      name: RouteNames.home,
-      path: RouteNames.home,
+      name: RouteNames.chat,
+      path: RouteNames.chat,
       pageBuilder: (context, state) {
         return MaterialPage(
-          child: const HomeScreen(),
+          child: const ChatScreen(),
           name: state.name,
         );
       },

@@ -60,9 +60,11 @@ class _AnimatedRankItemState extends State<_AnimatedRankItem> {
   @override
   void initState() {
     Timer(const Duration(milliseconds: 500), () {
-      setState(() {
-        _opacity = 1;
-      });
+      if (mounted) {
+        setState(() {
+          _opacity = 1;
+        });
+      }
     });
     super.initState();
   }

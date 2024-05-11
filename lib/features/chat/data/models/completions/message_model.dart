@@ -13,4 +13,6 @@ class MessageModel {
       content: json['content'],
     );
   }
+
+  Map<String, dynamic> toJson() => {'role': role, 'content': content};
 }

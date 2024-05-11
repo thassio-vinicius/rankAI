@@ -1,4 +1,33 @@
 {
   "appName": "RankAI",
-  "getStarted": "Get started"
+  "getStarted": "Get started",
+  "promptHint": "\"10 best restaurants in the world?\"",
+  "emptyChatMessage": "Ask for a ranking below to get started!",
+  "genericErrorMessage": "There was an error with your request. Please try again.",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "daysAgo": "{days} days ago",
+  "@daysAgo": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "monthsAgo": "{months} months ago",
+  "@monthsAgo": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "yearsAgo": "{years} years ago",
+  "@yearsAgo": {
+    "placeholders": {
+      "years": {
+        "type": "int"
+      }
+    }
+  }
 }

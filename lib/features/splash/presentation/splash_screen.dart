@@ -70,7 +70,9 @@ class _SplashScreenState extends State<SplashScreen>
               child: AnimatedOpacity(
                 opacity: _backgroundOpacity,
                 duration: const Duration(milliseconds: 500),
-                child: const AnimatedBackground(),
+                child: Hero(
+                    tag: 'AnimatedBackground',
+                    child: const AnimatedBackground()),
                 onEnd: () {
                   _controller.forward();
                 },
@@ -97,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
                         child: PrimaryButton(
                           text: intl.getStarted,
                           onPressed: () =>
-                              MyNavigator(context).goNamed(RouteNames.home),
+                              MyNavigator(context).goNamed(RouteNames.chat),
                         ),
                       ),
                     ),

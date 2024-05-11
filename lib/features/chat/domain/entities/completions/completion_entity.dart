@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
-import 'package:rankai/core/data/models/completion_model.dart';
-import 'package:rankai/core/domain/entities/choice_entity.dart';
-import 'package:rankai/core/domain/entities/usage_entity.dart';
+import 'package:rankai/features/chat/data/models/completions/completion_model.dart';
+import 'package:rankai/features/chat/domain/entities/completions/choice_entity.dart';
+import 'package:rankai/features/chat/domain/entities/completions/usage_entity.dart';
 
 class CompletionsEntity extends Equatable {
   final String id;
   final String object;
   final int created;
   final String model;
-  final String systemFingerprint;
+  final String? systemFingerprint;
   final List<ChoiceEntity> choices;
   final UsageEntity usage;
 
@@ -17,9 +17,9 @@ class CompletionsEntity extends Equatable {
     required this.object,
     required this.created,
     required this.model,
-    required this.systemFingerprint,
     required this.choices,
     required this.usage,
+    this.systemFingerprint,
   });
 
   factory CompletionsEntity.fromModel(CompletionsModel model) {

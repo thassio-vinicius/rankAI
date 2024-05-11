@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:rankai/core/data/models/usage_model.dart';
+import 'package:rankai/features/chat/data/models/completions/usage_model.dart';
 
 class UsageEntity extends Equatable {
   final int promptTokens;

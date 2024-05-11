@@ -1,12 +1,12 @@
-import 'package:rankai/core/data/models/choice_model.dart';
-import 'package:rankai/core/data/models/usage_model.dart';
+import 'package:rankai/features/chat/data/models/completions/choice_model.dart';
+import 'package:rankai/features/chat/data/models/completions/usage_model.dart';
 
 class CompletionsModel {
   String id;
   String object;
   int created;
   String model;
-  String systemFingerprint;
+  String? systemFingerprint;
   List<ChoiceModel> choices;
   UsageModel usage;
 
@@ -15,9 +15,9 @@ class CompletionsModel {
     required this.object,
     required this.created,
     required this.model,
-    required this.systemFingerprint,
     required this.choices,
     required this.usage,
+    this.systemFingerprint,
   });
 
   factory CompletionsModel.fromJson(Map<String, dynamic> json) {

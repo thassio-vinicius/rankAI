@@ -1,4 +1,4 @@
-import 'package:rankai/core/data/models/message_model.dart';
+import 'package:rankai/features/chat/data/models/completions/message_model.dart';
 
 class ChoiceModel {
   int index;

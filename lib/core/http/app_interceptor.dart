@@ -13,10 +13,12 @@ class AppInterceptors extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    options.data['model'] = 'gpt-3.5-turbo';
+
     Print.magenta("URL >> ${options.uri}");
     Print.magenta("Data >> ${options.data}");
 
-    options.data['model'] = 'gpt-3.5-turbo';
+    handler.next(options);
   }
 
   @override

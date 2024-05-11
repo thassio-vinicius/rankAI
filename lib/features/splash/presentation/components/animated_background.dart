@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:rankai/core/utils/icons.dart';
 
 class AnimatedBackground extends StatefulWidget {
-  const AnimatedBackground({super.key});
+  final bool shouldDisableAnimation;
+  const AnimatedBackground({this.shouldDisableAnimation = false, super.key});
 
   @override
   State<AnimatedBackground> createState() => _WidgetState();
@@ -37,7 +38,7 @@ class _WidgetState extends State<AnimatedBackground> {
     return Stack(
       children: [
         AnimatedPositioned(
-          right: rightPosition,
+          right: widget.shouldDisableAnimation ? 0 : rightPosition,
           duration: animationDuration,
           child: SizedBox(
             key: childKey,
