@@ -75,7 +75,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     const Padding(
                       padding: EdgeInsets.only(left: 16.0),
-                      child: AppLogo(large: false),
+                      child: AppLogo(
+                        large: false,
+                        animate: false,
+                      ),
                     ),
                     Builder(builder: (context) {
                       return IconButton(

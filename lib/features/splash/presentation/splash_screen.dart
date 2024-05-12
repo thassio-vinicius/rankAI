@@ -83,7 +83,11 @@ class _SplashScreenState extends State<SplashScreen>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Spacer(),
-                    const AppLogo(large: true),
+                    if (_controller.isCompleted)
+                      const AppLogo(
+                        large: true,
+                        animate: true,
+                      ),
                     const SizedBox(height: 12),
                     if (_controller.isCompleted) const AnimatedRank(),
                     const SizedBox(height: 12),
