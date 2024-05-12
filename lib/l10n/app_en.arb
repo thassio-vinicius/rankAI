@@ -31,7 +31,6 @@
     }
   },
   "deleteChatHistory": "Delete chat history",
-  "postPrompt": "- If you are unable to answer the question, please include the word 'Sorry' in your response",
   "sorry": "Sorry",
   "restartChat": "Are you sure you want to restart the chat? You'll lose all data, including previous images and messages.",
   "yes": "Yes",
