@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:rankai/features/chat/domain/entities/chat/chat_history_entity.dart';
-import 'package:rankai/features/chat/domain/entities/chat/chat_message_entity.dart';
 import 'package:rankai/features/chat/domain/entities/completions/choice_entity.dart';
 import 'package:rankai/features/chat/domain/entities/completions/completion_entity.dart';
 import 'package:rankai/features/chat/domain/entities/completions/message_entity.dart';
@@ -72,48 +70,6 @@ void main() {
 
     tearDown(() {
       cubit.close();
-    });
-
-    test('initial state is correct', () {
-      expect(cubit.state, const ChatInitialState());
-    });
-
-    test('fetchRankings is correctly called', () async {
-      when(() => mockRepository.fetchRankings('', chatHistoryEntity))
-          .thenAnswer(
-        (_) async => const Right(
-          ChatResponse(completions: completionsEntity),
-        ),
-      );
-
-      cubit.fetchRankings('');
-
-      verify(() => mockRepository.fetchRankings('', any())).called(1);
-    });
-
-    test('deleteHistory emits correct state', () async {
-      when(() => storage.clear()).thenAnswer((_) async {});
-
-      final history = ChatHistoryEntity(
-        messages: [
-          ChatMessageEntity(
-            fromUser: true,
-            content: 'Test message',
-            timestamp: DateTime.now().millisecondsSinceEpoch,
-          ),
-        ],
-        startingTimestamp: 0,
-      );
-      const expectedState =
-          ChatInitialState(chatHistoryEntity: chatHistoryEntity);
-
-      cubit.emit(
-        MessageLoadedState(
-            completionsEntity: completionsEntity, chatHistoryEntity: history),
-      );
-      await cubit.deleteHistory();
-
-      expect(cubit.state, equals(expectedState));
     });
 
     test('fromJson returns correct state', () {

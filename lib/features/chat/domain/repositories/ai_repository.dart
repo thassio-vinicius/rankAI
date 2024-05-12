@@ -55,7 +55,7 @@ class AIRepositoryImpl extends AIRepository {
       GeneratedImageEntity? generatedImage;
 
       if (_shouldGenerateImage(messageContent)) {
-        final imageResponse = await _generateImage(messageContent);
+        final imageResponse = await generateImage(messageContent);
 
         imageResponse.fold((l) {
           debugPrint(l.toString());
@@ -75,7 +75,8 @@ class AIRepositoryImpl extends AIRepository {
     }
   }
 
-  Future<Either<Exception, GeneratedImageEntity>> _generateImage(
+  @visibleForTesting
+  Future<Either<Exception, GeneratedImageEntity>> generateImage(
     String prompt,
   ) async {
     try {
