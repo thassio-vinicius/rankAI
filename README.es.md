@@ -19,15 +19,18 @@ Para ejecutar la aplicación:
 
 2. Genera una clave de API secreta desde [OpenAI](https://openai.com/api/)
 
-3. Copia la clave de API generada, crea un archivo `.env` en la carpeta raíz del proyecto y pega la clave en el formato siguiente (más información sobre el manejo de variables de entorno [aquí](https://pub.dev/packages/flutter_dotenv)):
+3. Copie la clave API generada y el ID de la organización (puede encontrar el ID de la organización [aquí](https://platform.openai.com/settings/organization/general)).
+
+4. Cree un archivo .env en la carpeta raíz del proyecto y pegue sus claves en el formato siguiente (más información sobre el manejo de variables de entorno [aquí](https://pub.dev/packages/flutter_dotenv)):
 
 ```
 API_KEY = TU_CLAVE_AQUÍ
+API_ORGANIZATION = TU_ORGANIZACIÓN_ID_AQUÍ
 ```
 
-4. Ejecuta `flutter gen-l10n` para generar los archivos `AppLocalizations`. ¡Actualmente ofrecemos soporte para los idiomas inglés y español!
+5. Ejecuta `flutter gen-l10n` para generar los archivos `AppLocalizations`. ¡Actualmente ofrecemos soporte para los idiomas inglés y español!
 
-5. Ejecuta la aplicación con `flutter run`. ¡Funciona tanto en Android como en iOS!
+6. Ejecuta la aplicación con `flutter run`. ¡Funciona tanto en Android como en iOS!
 
 ### Versión de Flutter
 
