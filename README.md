@@ -1,3 +1,5 @@
+English | [Spanish][readme-es] |
+
 # RankAI
 
 RankAI Mobile app developed with Flutter and the OpenAI API.
