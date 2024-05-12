@@ -1,3 +1,6 @@
+[English](README.md) | Spanish
+
+
 # RankAI
 
 RankAI es una aplicación móvil desarrollada con Flutter y la API de OpenAI.
