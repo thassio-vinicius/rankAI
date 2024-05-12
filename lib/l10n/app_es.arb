@@ -32,5 +32,8 @@
   },
   "deleteChatHistory": "Borrar historial de chat",
   "postPrompt": "- Si no puedes responder la pregunta, por favor incluye la palabra 'Lo siento' en tu respuesta",
-  "sorry": "Lo siento"
+  "sorry": "Lo siento",
+  "restartChat": "¿Estás seguro de que deseas reiniciar el chat? Perderás todos los datos, incluidas las imágenes y mensajes anteriores.",
+  "yes": "Sí",
+  "no": "No"
 }

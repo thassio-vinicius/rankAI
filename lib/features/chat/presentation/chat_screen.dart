@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,10 +84,84 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     Builder(builder: (context) {
+                      final isEmpty = context.watch<ChatCubit>().state.isEmpty;
                       return IconButton(
-                        onPressed: () {
-                          context.read<ChatCubit>().deleteHistory();
-                        },
+                        onPressed: isEmpty
+                            ? null
+                            : () {
+                                Platform.isIOS
+                                    ? showCupertinoDialog(
+                                        context: context,
+                                        builder: (_) {
+                                          return CupertinoAlertDialog(
+                                            content: MyText(
+                                              intl.restartChat,
+                                              style: MyTextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            actions: [
+                                              CupertinoDialogAction(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                isDefaultAction: true,
+                                                child: Text(
+                                                  intl.no,
+                                                  style: const TextStyle(
+                                                    color: Colors.blueAccent,
+                                                  ),
+                                                ),
+                                              ),
+                                              CupertinoDialogAction(
+                                                onPressed: () {
+                                                  context
+                                                      .read<ChatCubit>()
+                                                      .deleteHistory();
+                                                  Navigator.pop(context);
+                                                },
+                                                isDestructiveAction: true,
+                                                child: Text(
+                                                  intl.yes,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        })
+                                    : showDialog(
+                                        context: context,
+                                        builder: (_) {
+                                          return AlertDialog(
+                                            content: MyText(
+                                              intl.restartChat,
+                                              style: MyTextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text(
+                                                  intl.no,
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  context
+                                                      .read<ChatCubit>()
+                                                      .deleteHistory();
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  intl.yes,
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                              },
                         icon: Transform.rotate(
                           angle: 1.1,
                           child: const Icon(
