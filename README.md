@@ -1,8 +1,14 @@
+English | [Spanish](README.es.md)
+
 # RankAI
 
 RankAI Mobile app developed with Flutter and the OpenAI API.
 
-<img  width="250" src="./previews/splash.png"   ><img  width="250" src="./previews/chat.png" hspace="50"><img  width="250" src="./previews/image_preview.png" >
+<p float="left">
+  <img src="./previews/splash.png" width="250" />
+  <img src="./previews/chat.png" width="250" /> 
+  <img src="./previews/image_preview.png" width="250" />
+</p>
 
 
 ## Run Instructions
