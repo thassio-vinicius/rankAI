@@ -2,7 +2,11 @@
 
 RankAI es una aplicación móvil desarrollada con Flutter y la API de OpenAI.
 
-<img  width="250" src="./previews/splash.png"   ><img  width="250" src="./previews/chat.png" hspace="50"><img  width="250" src="./previews/image_preview.png" >
+<p float="left">
+  <img src="./previews/splash.png" width="250" />
+  <img src="./previews/chat.png" width="250" /> 
+  <img src="./previews/image_preview.png" width="250" />
+</p>
 
 ## Instrucciones de Ejecución
 
