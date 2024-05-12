@@ -29,11 +29,12 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () => MyNavigator(context).pop(),
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
-                      )),
+                    onPressed: () => MyNavigator(context).pop(),
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                  ),
                   IconButton(
                     onPressed: () async {
                       final dir = await getApplicationDocumentsDirectory();
@@ -41,9 +42,7 @@ class _ImagePreviewScreenState extends State<ImagePreviewScreen> {
                           await File('${dir.path}${DateTime.now()}.png')
                               .writeAsBytes(widget.image);
 
-                      await Share.shareXFiles(
-                        [XFile(file.path)],
-                      );
+                      await Share.shareXFiles([XFile(file.path)]);
                     },
                     icon: Icon(
                       Platform.isIOS ? CupertinoIcons.share : Icons.share,

@@ -14,7 +14,7 @@ class HTTP {
         contentType: Headers.jsonContentType,
         headers: {
           "Authorization": "Bearer ${dotenv.env['API_KEY']}",
-          "OpenAI-Organization": "org-JOp6EFg0Ev3HRSEP5r7ls0kf",
+          "OpenAI-Organization": dotenv.env['API_ORGANIZATION'],
         },
       ),
     );
