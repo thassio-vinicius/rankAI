@@ -1,4 +1,4 @@
-English | [Spanish][readme-es] |
+English | [Spanish](README.es.md)
 
 # RankAI
 
