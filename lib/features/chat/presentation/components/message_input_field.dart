@@ -44,7 +44,7 @@ class MessageInputField extends StatelessWidget {
                   ),
                   hintStyle: GoogleFonts.openSans(
                     color: Colors.grey,
-                    fontSize: 12,
+                    fontSize: 14,
                   ),
                 ),
               ),

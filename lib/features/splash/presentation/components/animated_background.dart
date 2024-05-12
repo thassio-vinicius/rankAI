@@ -148,7 +148,7 @@ class _AnimatedBackgroundItemState extends State<_AnimatedBackgroundItem> {
               AssetIcons.chatGpt,
               width: 25,
               height: 25,
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.35),
             ),
           ),
         ),
