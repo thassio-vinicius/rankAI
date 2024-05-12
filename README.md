@@ -19,15 +19,18 @@ To run the app:
 
 2. Generate a secret API Key from [OpenAI](https://openai.com/api/)
 
-3. Copy the generated API Key, create a `.env` file in the project's root folder and paste the key in the format below (more info on handling environment variables [here](https://pub.dev/packages/flutter_dotenv)):
+3. Copy the generated API Key and the Organization ID (you can find the organization ID [here](https://platform.openai.com/settings/organization/general)).
+   
+4. Create a `.env` file in the project's root folder and paste your keys in the format below (more info on handling environment variables [here](https://pub.dev/packages/flutter_dotenv)):
 
 ```
+API_ORGANIZATION = YOUR_ORGANIZATION_ID_HERE
 API_KEY = YOUR_KEY_HERE
 ```
 
-4. Run `flutter gen-l10n` to generate the `AppLocalizations` files. We currently support both English and Spanish languages!
+5. Run `flutter gen-l10n` to generate the `AppLocalizations` files. We currently support both English and Spanish languages!
 
-5. Run the app with `flutter run`. It works on both Android and iOS!
+6. Run the app with `flutter run`. It works on both Android and iOS!
 
 ### Flutter Version
 
