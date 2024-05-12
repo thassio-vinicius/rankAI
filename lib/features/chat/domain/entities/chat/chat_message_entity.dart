@@ -3,6 +3,8 @@ import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
 import 'package:rankai/features/chat/data/models/chat/chat_message_model.dart';
+import 'package:rankai/features/chat/data/models/completions/message_model.dart';
+import 'package:rankai/features/chat/enums/message_role.dart';
 
 class ChatMessageEntity extends Equatable {
   final String content;
@@ -38,6 +40,11 @@ class ChatMessageEntity extends Equatable {
       image: json['image'],
     );
   }
+
+  MessageModel toModel() => MessageModel(
+        role: fromUser ? MessageRole.user.key : MessageRole.assistant.key,
+        content: content,
+      );
 
   Map<String, dynamic> toJson() => {
         'fromUser': fromUser,

@@ -113,14 +113,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         if (isEmpty) {
                           return Center(
-                            child: SizedBox(
-                              width: MediaQuery.sizeOf(context).width * 0.65,
-                              child: MyText.mediumSmall(
-                                intl.emptyChatMessage,
-                                style: MyTextStyle(
-                                  textAlign: TextAlign.center,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                            child: MyText.mediumSmall(
+                              intl.emptyChatMessage,
+                              style: MyTextStyle(
+                                textAlign: TextAlign.center,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           );
@@ -128,8 +125,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
                         if (state is MessageFailedState) {
                           return Center(
-                            child: SizedBox(
-                              width: MediaQuery.sizeOf(context).width * 0.65,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24.0),
                               child: MyText.mediumSmall(
                                 intl.genericErrorMessage,
                                 style: MyTextStyle(

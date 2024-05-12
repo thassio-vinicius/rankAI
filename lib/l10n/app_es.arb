@@ -2,7 +2,7 @@
   "appName": "RankAI",
   "getStarted": "Empezar",
   "promptHint": "\"¿10 mejores sitios de viajes en Barcelona?\"",
-  "emptyChatMessage": "¡Pide un ranking a continuación para empezar!",
+  "emptyChatMessage": "¡Pide un ranking a continuación\npara empezar!",
   "genericErrorMessage": "Hubo un error con tu solicitud. Por favor, inténtalo de nuevo.",
   "today": "Hoy",
   "yesterday": "Ayer",

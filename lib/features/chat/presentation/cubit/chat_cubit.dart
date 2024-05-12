@@ -16,7 +16,10 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
     emit(MessageLoadingState(chatHistoryEntity: state.chatHistoryEntity));
     _addMessage(prompt, true);
 
-    final response = await _repository.fetchRankings(prompt);
+    final response = await _repository.fetchRankings(
+      prompt,
+      state.chatHistoryEntity,
+    );
 
     response.fold(
       (l) {
@@ -39,7 +42,8 @@ class ChatCubit extends BaseCubit<ChatState> with HydratedMixin {
     );
   }
 
-  void deleteHistory() {
+  Future<void> deleteHistory() async {
+    await clear();
     emit(
       const ChatInitialState(
         chatHistoryEntity: ChatHistoryEntity(

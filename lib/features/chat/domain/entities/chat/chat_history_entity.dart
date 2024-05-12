@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:rankai/features/chat/data/models/chat/chat_history_model.dart';
+import 'package:rankai/features/chat/data/models/completions/message_model.dart';
 import 'package:rankai/features/chat/domain/entities/chat/chat_message_entity.dart';
 
 class ChatHistoryEntity extends Equatable {
@@ -31,6 +32,9 @@ class ChatHistoryEntity extends Equatable {
       startingTimestamp: model.startingTimestamp,
     );
   }
+
+  List<MessageModel> toMessageModel() =>
+      messages.map((e) => e.toModel()).toList();
 
   factory ChatHistoryEntity.fromJson(Map<String, dynamic> json) {
     return ChatHistoryEntity(

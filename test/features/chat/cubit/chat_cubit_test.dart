@@ -49,6 +49,10 @@ void main() {
 
   late Storage storage;
 
+  setUpAll(() {
+    registerFallbackValue(chatHistoryEntity);
+  });
+
   setUp(() {
     storage = MockStorage();
     when(
@@ -75,7 +79,8 @@ void main() {
     });
 
     test('fetchRankings is correctly called', () async {
-      when(() => mockRepository.fetchRankings(any())).thenAnswer(
+      when(() => mockRepository.fetchRankings('', chatHistoryEntity))
+          .thenAnswer(
         (_) async => const Right(
           ChatResponse(completions: completionsEntity),
         ),
@@ -83,10 +88,12 @@ void main() {
 
       cubit.fetchRankings('');
 
-      verify(() => mockRepository.fetchRankings('')).called(1);
+      verify(() => mockRepository.fetchRankings('', any())).called(1);
     });
 
-    test('deleteHistory emits correct state', () {
+    test('deleteHistory emits correct state', () async {
+      when(() => storage.clear()).thenAnswer((_) async {});
+
       final history = ChatHistoryEntity(
         messages: [
           ChatMessageEntity(
@@ -104,7 +111,7 @@ void main() {
         MessageLoadedState(
             completionsEntity: completionsEntity, chatHistoryEntity: history),
       );
-      cubit.deleteHistory();
+      await cubit.deleteHistory();
 
       expect(cubit.state, equals(expectedState));
     });

@@ -2,7 +2,7 @@
   "appName": "RankAI",
   "getStarted": "Get started",
   "promptHint": "\"10 best travel sites in Barcelona?\"",
-  "emptyChatMessage": "Ask for a ranking below to get started!",
+  "emptyChatMessage": "Ask for a ranking below to\nget started!",
   "genericErrorMessage": "There was an error with your request. Please try again.",
   "today": "Today",
   "yesterday": "Yesterday",

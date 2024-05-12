@@ -49,14 +49,16 @@ class ChatBubble extends StatelessWidget {
                     RouteNames.imagePreview,
                     extra: message.toUint8List()!,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: Hero(
-                      tag: message.toUint8List()!,
-                      child: Image.memory(
-                        message.toUint8List()!,
-                        width: 250,
-                        height: 250,
+                  child: Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Hero(
+                        tag: message.toUint8List()!,
+                        child: Image.memory(
+                          message.toUint8List()!,
+                          height: 300,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),

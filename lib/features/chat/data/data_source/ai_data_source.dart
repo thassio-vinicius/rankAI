@@ -6,18 +6,19 @@ import 'package:rankai/features/chat/data/models/images/generated_image_model.da
 import 'package:rankai/features/chat/enums/gpt_model.dart';
 
 abstract class AIDataSource {
+  const AIDataSource();
   Future<CompletionsModel> fetchRankings(List<MessageModel> messages);
   Future<GeneratedImageModel> generateImages(String prompt);
 }
 
 class AIDataSourceImpl extends AIDataSource {
-  final HTTP httpClient;
-  AIDataSourceImpl(this.httpClient);
+  final HTTP _httpClient;
+  const AIDataSourceImpl(this._httpClient);
 
   @override
   Future<CompletionsModel> fetchRankings(List<MessageModel> messages) async {
     try {
-      final response = await httpClient.client.post(
+      final response = await _httpClient.client.post(
         APIs.chatCompletions,
         data: {
           "messages": messages.map((e) => e.toJson()).toList(),
@@ -34,7 +35,7 @@ class AIDataSourceImpl extends AIDataSource {
   @override
   Future<GeneratedImageModel> generateImages(String prompt) async {
     try {
-      final response = await httpClient.client.post(
+      final response = await _httpClient.client.post(
         APIs.imageGenerations,
         data: {
           "prompt": prompt,

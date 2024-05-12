@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rankai/features/chat/data/data_source/ai_data_source.dart';
 import 'package:rankai/features/chat/data/models/completions/message_model.dart';
+import 'package:rankai/features/chat/domain/entities/chat/chat_history_entity.dart';
 import 'package:rankai/features/chat/domain/entities/completions/completion_entity.dart';
 import 'package:rankai/features/chat/domain/entities/images/generated_image_entity.dart';
 import 'package:rankai/features/chat/enums/message_role.dart';
@@ -18,30 +19,36 @@ class ChatResponse extends Equatable {
   List<Object?> get props => [generatedImage, completions];
 }
 
-class AIRepository {
-  final AIDataSource _source;
-  final GlobalAppLocalizations _localizations;
-  const AIRepository(this._source, this._localizations);
+abstract class AIRepository {
+  const AIRepository();
 
   Future<Either<Exception, ChatResponse>> fetchRankings(
     String prompt,
+    ChatHistoryEntity chatHistory,
+  );
+}
+
+class AIRepositoryImpl extends AIRepository {
+  final AIDataSource _source;
+  final GlobalAppLocalizations _localizations;
+
+  const AIRepositoryImpl(this._source, this._localizations);
+
+  @override
+  Future<Either<Exception, ChatResponse>> fetchRankings(
+    String prompt,
+    ChatHistoryEntity chatHistory,
   ) async {
     try {
-      final userMessage = MessageModel(
-        role: MessageRole.user.key,
-        content: prompt,
-        //content: prompt + _localizations.current.postPrompt,
-      );
+      final messageHistory = chatHistory.toMessageModel();
       final systemMessage = MessageModel(
         role: MessageRole.system.key,
         content:
-            "You are a helpful assistant, but you only answer questions about rankings. And you only answer questions that were asked in the ${_localizations.locale.languageCode} language code",
+            "You are a helpful assistant, but you only answer requests to rank things.",
       );
 
-      final response = await _source.fetchRankings([
-        systemMessage,
-        userMessage,
-      ]);
+      final response = await _source
+          .fetchRankings(messageHistory.followedBy([systemMessage]).toList());
 
       final completions = CompletionsEntity.fromModel(response);
       final messageContent = response.choices.first.message.content;
