@@ -2,15 +2,15 @@ English | [Spanish](README.es.md)
 
 # RankAI
 
-RankAI Mobile app developed with Flutter and the OpenAI API. The purpose of this app is to provide the user with rankings regarding all sorts of topics. It's powered by the ChatGPT 3.5 turbo model for completions and the DALL-E 3 for image generation. It generates images based on the latest rank provided. Built in accordance with Flutter's BLoC pattern and Clean Arch principles, below are the main packages used and their responsibility:
+RankAI Mobile app developed with Flutter and the OpenAI API. The purpose of this app is to provide the user with rankings regarding all sorts of topics. It's powered by the ChatGPT 3.5 turbo model for completions and the DALL-E 3 model for image generation. It generates images based on the latest rank provided. Built in accordance with Flutter's BLoC pattern and Clean Arch principles, below are the main packages used and their responsibility:
 
-- State Management: flutter_bloc, more specifically Cubits
-- Local Storage: hydrated_bloc and path_provider
-- Dependency Injection: get_it
-- Internationalization: intl and flutter_localizations
-- HTTP requests: Dio
-- Navigation: go_router
-- Testing: mocktail
+- State Management: `flutter_bloc`, more specifically Cubits
+- Local Storage: `hydrated_bloc` and `path_provider`
+- Dependency Injection: `get_it`
+- Internationalization: `intl` and `flutter_localizations`
+- HTTP requests: `Dio`
+- Navigation: `go_router`
+- Testing: `mocktail`
 
 <p float="left">
   <img src="./previews/splash.png" width="250" />
